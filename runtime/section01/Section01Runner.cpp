@@ -1,7 +1,6 @@
 //
 // Created by ypp06 on 2025-01-31.
 //
-#define GLEW_STATIC
 #include "Section01Runner.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
