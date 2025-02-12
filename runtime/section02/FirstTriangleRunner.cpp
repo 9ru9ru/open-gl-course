@@ -13,7 +13,7 @@ GLuint VAO, VBO, shaderProgram;
 
 // Create Vertex Shader in GLSL.
 static const char* vShader =
-	"#version 330\n"
+    "#version 330\n"
 	"layout (location = 0) in vec3 pos;\n"
     "void main()\n"
     "{\n"
@@ -34,7 +34,7 @@ static const char* fShader =
 // Shader에 대해 1. source 지정, 2. compile, 3. targetProgram에 attach.
 void FirstTriangleRunner::AddShader(GLuint targetProgram, const char* rawShaderCode, GLenum shaderType)
 {
-  	GLuint targetShader = glCreateShader(shaderType);
+    GLuint targetShader = glCreateShader(shaderType);
 
     const GLchar* code[1];
     code[0] = rawShaderCode;
@@ -57,19 +57,19 @@ void FirstTriangleRunner::AddShader(GLuint targetProgram, const char* rawShaderC
     }
 
     glAttachShader(targetProgram, targetShader);
-	return;
+    return;
 }
 
 void FirstTriangleRunner::CompileShaders()
 {
-	shaderProgram = glCreateProgram();
+    shaderProgram = glCreateProgram();
     if (!shaderProgram)
     {
         printf("Error creating shader program!\n");
         return;
     }
 
-	AddShader(shaderProgram, vShader, GL_VERTEX_SHADER);
+    AddShader(shaderProgram, vShader, GL_VERTEX_SHADER);
     AddShader(shaderProgram, fShader, GL_FRAGMENT_SHADER);
 
     GLint result = 0;
@@ -116,7 +116,7 @@ void FirstTriangleRunner::CreateTriangle()
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // Attribute 선언 및 활성화
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
