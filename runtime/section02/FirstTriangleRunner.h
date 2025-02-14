@@ -16,6 +16,7 @@ public:
     ~FirstTriangleRunner() override = default;
 private:
     GLFWwindow* ReadyGlfwGlewEnv();
+    void ControlMoveOffset();
     void CreateTriangle();
     void AddShader(GLuint targetProgram, const char* rawShaderCode, GLenum shaderType);
     void CompileShaders();

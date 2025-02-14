@@ -11,13 +11,20 @@
 const GLint WIDTH = 800, HEIGHT = 600;
 GLuint VAO, VBO, shaderProgram;
 
+GLuint uniformXMove;
+bool direction = true;
+float triOffset = 0.0f;
+float triMaxOffset = 0.7f;
+float triIncrement = 0.005f;
+
 // Create Vertex Shader in GLSL.
 static const char* vShader =
     "#version 330\n"
 	"layout (location = 0) in vec3 pos;\n"
+    "uniform float xMove; \n"
     "void main()\n"
     "{\n"
-    "   gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);\n"
+    "   gl_Position = vec4(0.4 * pos.x + xMove, 0.4 * pos.y, 0.4 * pos.z, 1.0);\n"
     "}\n";
 
 // Create Fragment Shader in GLSL.
@@ -96,7 +103,7 @@ void FirstTriangleRunner::CompileShaders()
         printf("Error validating program: '%s'\n", eLog);
         return;
     }
-
+    uniformXMove = glGetUniformLocation(shaderProgram, "xMove");
 }
 
 void FirstTriangleRunner::CreateTriangle()
@@ -181,6 +188,21 @@ GLFWwindow* FirstTriangleRunner::ReadyGlfwGlewEnv()
     return mainWindow;
 }
 
+void FirstTriangleRunner::ControlMoveOffset() {
+    if (direction)
+    {
+        triOffset += triIncrement;
+    }
+    else
+    {
+        triOffset -= triIncrement;
+    }
+    if (abs(triOffset) >= triMaxOffset)
+    {
+        direction = !direction;
+    }
+}
+
 bool FirstTriangleRunner::Run()
 {
     GLFWwindow* mainWindow = ReadyGlfwGlewEnv();
@@ -199,10 +221,12 @@ bool FirstTriangleRunner::Run()
         // Get + handle user input events.
         glfwPollEvents();
 
+        ControlMoveOffset();
+
         // Clear window.
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
+        glUniform1f(uniformXMove, triOffset);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
