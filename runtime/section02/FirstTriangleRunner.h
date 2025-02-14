@@ -11,16 +11,15 @@
 
 class FirstTriangleRunner : public IBaseRunner
 {
-public:
-    bool Run() override;
-    ~FirstTriangleRunner() override = default;
-private:
-    GLFWwindow* ReadyGlfwGlewEnv();
-    void ControlMoveOffset();
-    void CreateTriangle();
-    void AddShader(GLuint targetProgram, const char* rawShaderCode, GLenum shaderType);
-    void CompileShaders();
-
+    public:
+        bool Run() override;
+        ~FirstTriangleRunner() override = default;
+    private:
+        GLFWwindow* ReadyGlfwGlewEnv();
+        void ControlMoveOffset();
+        void CreateTriangle();
+        void AddShader(GLuint targetProgram, const char* rawShaderCode, GLenum shaderType);
+        void CompileShaders();
 };
 
 #endif //FIRSTTRIANGLERUNNER_H
