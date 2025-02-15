@@ -192,7 +192,8 @@ GLFWwindow* TriangleTranslationRunner::ReadyGlfwGlewEnv()
     return mainWindow;
 }
 
-void TriangleTranslationRunner::ControlMoveOffset() {
+void TriangleTranslationRunner::MoveTriangle()
+{
     if (direction)
     {
         triOffset += triIncrement;
@@ -205,6 +206,9 @@ void TriangleTranslationRunner::ControlMoveOffset() {
     {
         direction = !direction;
     }
+    glm::mat4 translateMatrix(1.0f); // identity matrix.
+    translateMatrix = glm::translate(translateMatrix, glm::vec3(triOffset, triOffset, 0.0f));
+    glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(translateMatrix));
 }
 
 bool TriangleTranslationRunner::Run()
@@ -229,13 +233,9 @@ bool TriangleTranslationRunner::Run()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        ControlMoveOffset();
-        glm::mat4 model(1.0f); // identity matrix.
-        model = glm::translate(model, glm::vec3(triOffset, triOffset, 0.0f));
-        glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+        MoveTriangle();
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
-
         glfwSwapBuffers(mainWindow);
     }
     glBindVertexArray(0);

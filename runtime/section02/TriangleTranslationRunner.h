@@ -16,7 +16,7 @@ class TriangleTranslationRunner : public IBaseRunner
         ~TriangleTranslationRunner() override = default;
     private:
         GLFWwindow* ReadyGlfwGlewEnv();
-        void ControlMoveOffset();
+        void MoveTriangle();
         void CreateTriangle();
         void AddShader(GLuint targetProgram, const char* rawShaderCode, GLenum shaderType);
         void CompileShaders();
